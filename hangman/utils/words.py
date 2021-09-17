@@ -45,10 +45,12 @@ def get_guess(first_time: bool = False) -> str:
 def check_guessed_letter(letter: str) -> Union[bool, str]:
     if len(letter) == 1 and letter.isalpha():
         return True
+    elif len(letter) != 1:
+        if letter == "":
+            return "You need to provide one letter, it can't be empty. What is your guess? "
+        return "You need to provide one letter. What is your guess? "
     elif letter.isalpha() == False:
         return "You need to provide a letter, not number. What is your guess? "
-    elif len(letter) != 1:
-        return "You need to provide one letter. What is your guess? "
 
 
 def get_mapped_letters(word: str) -> Dict[str, List[int]]:
