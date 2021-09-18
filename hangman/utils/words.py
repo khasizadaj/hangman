@@ -24,6 +24,15 @@ def get_random_word(words: List[str]) -> str:
 
 
 def get_guess(first_time: bool = False) -> str:
+    """
+    Function prompts user for guess and returns provided guess. It repeatedly 
+    asks for new guess until input meets requirements (`check_input` function).
+    
+    Args:
+        first_time: boolean value indicating whether input is asked for first 
+            time 
+    """
+    
     if first_time:
         message = "What's your first guess, clever?: "
     else:
@@ -33,7 +42,7 @@ def get_guess(first_time: bool = False) -> str:
     while input_is_correct != True:
         letter = input(message)
 
-        check = check_guessed_letter(letter)
+        check = check_input(letter)
         if check == True:
             input_is_correct = True
         else:
@@ -42,14 +51,22 @@ def get_guess(first_time: bool = False) -> str:
     return letter
 
 
-def check_guessed_letter(letter: str) -> Union[bool, str]:
-    if len(letter) == 1 and letter.isalpha():
+def check_input(input_str: str) -> Union[bool, str]:
+    """
+    Function check if input provided is correct. If not, returns helper text to 
+    make user provide input correctly.
+
+    Args
+        input_str: input that is provided by user
+    """
+
+    if len(input_str) == 1 and input_str.isalpha():
         return True
-    elif len(letter) != 1:
-        if letter == "":
+    elif len(input_str) != 1:
+        if input_str == "":
             return "You need to provide one letter, it can't be empty. What is your guess? "
         return "You need to provide one letter. What is your guess? "
-    elif letter.isalpha() == False:
+    elif input_str.isalpha() == False:
         return "You need to provide a letter, not number. What is your guess? "
 
 

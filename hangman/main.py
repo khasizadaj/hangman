@@ -1,6 +1,6 @@
 from typing import List, Dict
 
-from utils.words import (WORDLIST, get_guess, check_guessed_letter, get_masked_word, get_random_word,
+from utils.words import (WORDLIST, get_guess, check_input, get_masked_word, get_random_word,
                          update_masked_word, get_pretty_masked_word, get_mapped_letters)
 from utils.helper_funcs import (get_guess_occurrences, get_guess_status,
                                 get_emotion, get_letter_message)
