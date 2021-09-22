@@ -9,11 +9,12 @@
   or using all chances
 
 
-## _coming in version 0.2_
+## version 0.2
 
-- alerting about repeatedly typed letters
-- collecting names of player(s)
+- (done) alerting about repeatedly typed letters
+- (done) type "show" keyword to get previously typed letters
 - multiplayer
+- collecting names of player(s)
 
 
 ## _coming in version 0.3_

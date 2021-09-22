@@ -1,5 +1,8 @@
 from typing import List, Dict, Union
 from random import randint
+
+from .helper_funcs import add_linebreak
+
 WORDLIST = {"easy": ["a", "about", "above", "across", "act", "actor", "active", "activity",
                      "add", "afraid", "after", "again", "age", "ago", "agree", "air", "all",
                      "alone", "along", "already", "always", "am", "amount", "an", "and", "angry",
@@ -23,7 +26,7 @@ def get_random_word(words: List[str]) -> str:
     return words[rand_int]
 
 
-def get_guess(first_time: bool = False) -> str:
+def get_guess(provided_letters: List[str], first_time: bool = False) -> str:
     """
     Function prompts user for guess and returns provided guess. It repeatedly 
     asks for new guess until input meets requirements (`check_input` function).
@@ -38,17 +41,39 @@ def get_guess(first_time: bool = False) -> str:
     else:
         message = "Time for next guess. What is the letter? "
 
+    repeat_input_counter = 0
     input_is_correct = False
     while input_is_correct != True:
-        letter = input(message)
+        input_str = input(message)
 
-        check = check_input(letter)
+        used_letters = [*provided_letters]
+        if input_str == "show":
+            add_linebreak()
+            print(show_used_letters(used_letters))
+
+        check = check_input(input_str)
         if check == True:
-            input_is_correct = True
+            is_provided_before = check_provision(input_str, used_letters)
+            if is_provided_before == False:
+                used_letters.append(input_str)
+                input_is_correct = True
+            else:
+                if repeat_input_counter >= 2:
+                    used_letters.sort()
+                    add_linebreak()
+                    print(show_used_letters(used_letters))
+
+                repeat_input_counter += 1
+                message = "You have already used this letter. What is your guess? "
+
         else:
             message = check
 
-    return letter
+    return input_str, used_letters
+
+
+def show_used_letters(letters: List[str]) -> None:
+    return f"You have used these letters so far: \"{', '.join(letters)}\""
 
 
 def check_input(input_str: str) -> Union[bool, str]:
@@ -68,6 +93,9 @@ def check_input(input_str: str) -> Union[bool, str]:
         return "You need to provide one letter. What is your guess? "
     elif input_str.isalpha() == False:
         return "You need to provide a letter, not number. What is your guess? "
+
+def check_provision(input_str: str, provided_letters: List[str]) -> bool:
+    return input_str in provided_letters
 
 
 def get_mapped_letters(word: str) -> Dict[str, List[int]]:

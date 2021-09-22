@@ -3,20 +3,20 @@ from typing import List, Dict
 from utils.words import (WORDLIST, get_guess, check_input, get_masked_word, get_random_word,
                          update_masked_word, get_pretty_masked_word, get_mapped_letters)
 from utils.helper_funcs import (get_guess_occurrences, get_guess_status,
-                                get_emotion, get_letter_message)
+                                get_emotion, get_letter_message, add_linebreak)
 
 RAND_WORD = get_random_word(WORDLIST["easy"])
 CHANCES = 6
 HIDDEN_WORD = get_masked_word(RAND_WORD)
 LETTERS = get_mapped_letters(RAND_WORD)
-
+provided_letters = []
 
 length = len(RAND_WORD)
 print(f"Word contains {length} letters. Let's find them!")
 print(get_pretty_masked_word(HIDDEN_WORD))
-print("")
+add_linebreak()
 
-guessed_letter = get_guess(first_time=True)
+guessed_letter, provided_letters = get_guess(provided_letters, first_time=True)
 
 occurrences = get_guess_occurrences(guessed_letter, LETTERS)
 status = get_guess_status(occurrences)
@@ -32,12 +32,15 @@ print("")
 emotion = get_emotion(status)
 message = get_letter_message(status, guessed_letter)
 print(f"{emotion} {message}")
-print("\n")  # two line breaks
+
+# two line breaks
+add_linebreak(quantity=2)  
+
 print(get_pretty_masked_word(HIDDEN_WORD))
-print("")
+add_linebreak()
 
 while "_" in HIDDEN_WORD:
-    guessed_letter = get_guess()
+    guessed_letter, provided_letters = get_guess(provided_letters)
     occurrences = get_guess_occurrences(guessed_letter, LETTERS)
     status = get_guess_status(occurrences)
 
@@ -64,6 +67,9 @@ while "_" in HIDDEN_WORD:
     print("")
     emotion = get_emotion(status)
     print(f"{emotion} {message}")
-    print("\n")  # two line breaks
+
+    # two line breaks
+    add_linebreak(quantity=2)   
+    
     print(get_pretty_masked_word(HIDDEN_WORD))
-    print("")
+    add_linebreak()   

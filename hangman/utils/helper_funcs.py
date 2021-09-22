@@ -76,5 +76,21 @@ def get_letter_message(status: Optional[bool] = None, guessed_letter: Optional[s
     return f'Letter "{guessed_letter}" is not in the word.'
 
 
+def add_linebreak(quantity: int = 1) -> None:
+    """
+    Function adds line break(s).
+
+    Args:
+        quantity: quantity of line breaks required
+    """
+    if quantity == 1:
+        print("")
+
+    for _ in range(quantity):
+        print("")
+    
+    return None
+
+
 if __name__ == "__main__":
     print("Module contains general helper functions for hangman.")
