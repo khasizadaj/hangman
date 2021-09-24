@@ -1,7 +1,8 @@
 from typing import List, Dict, Union
 from random import randint
 
-from .helper_funcs import add_linebreak
+from .helper_funcs import (get_guess_occurrences, get_guess_status,
+                           get_emotion, get_letter_message, add_linebreak)
 
 WORDLIST = {"easy": ["a", "about", "above", "across", "act", "actor", "active", "activity",
                      "add", "afraid", "after", "again", "age", "ago", "agree", "air", "all",
@@ -26,16 +27,16 @@ def get_random_word(words: List[str]) -> str:
     return words[rand_int]
 
 
-def get_guess(provided_letters: List[str], first_time: bool = False) -> str:
+def get_guessed_letter(provided_letters: List[str], first_time: bool = False) -> str:
     """
     Function prompts user for guess and returns provided guess. It repeatedly 
     asks for new guess until input meets requirements (`check_input` function).
-    
+
     Args:
         first_time: boolean value indicating whether input is asked for first 
             time 
     """
-    
+
     if first_time:
         message = "What's your first guess, clever?: "
     else:
@@ -93,6 +94,7 @@ def check_input(input_str: str) -> Union[bool, str]:
         return "You need to provide one letter. What is your guess? "
     elif input_str.isalpha() == False:
         return "You need to provide a letter, not number. What is your guess? "
+
 
 def check_provision(input_str: str, provided_letters: List[str]) -> bool:
     return input_str in provided_letters
@@ -163,6 +165,80 @@ def get_pretty_masked_word(masked_word: List[str]) -> str:
     """
 
     return " ".join(masked_word)
+
+
+def guess_word() -> None:
+    rand_word = get_random_word(WORDLIST["easy"])
+    chances = 6
+    hidden_word = get_masked_word(rand_word)
+    mapped_letters = get_mapped_letters(rand_word)
+    provided_letters = []
+
+    length = len(rand_word)
+    print(f"Word contains {length} letters. Let's find them!")
+    print(get_pretty_masked_word(hidden_word))
+    add_linebreak()
+
+    guessed_letter, provided_letters = get_guessed_letter(
+        provided_letters, first_time=True)
+
+    occurrences = get_guess_occurrences(guessed_letter, mapped_letters)
+    status = get_guess_status(occurrences)
+
+    if status:
+        hidden_word = update_masked_word(
+            hidden_word, guessed_letter, occurrences)
+    else:
+        chances -= 1
+        print(f"\nYou missed. You have {chances} chances left.\n")
+
+    print("")
+    emotion = get_emotion(status)
+    message = get_letter_message(status, guessed_letter)
+    print(f"{emotion} {message}")
+
+    # two line breaks
+    add_linebreak(quantity=2)
+
+    print(get_pretty_masked_word(hidden_word))
+    add_linebreak()
+
+    while "_" in hidden_word:
+        guessed_letter, provided_letters = get_guessed_letter(provided_letters)
+        occurrences = get_guess_occurrences(guessed_letter, mapped_letters)
+        status = get_guess_status(occurrences)
+
+        if status:
+            hidden_word = update_masked_word(
+                hidden_word, guessed_letter, occurrences)
+
+            if "_" not in hidden_word:
+                print(
+                    f'\nAaaand "{guessed_letter}" is last letter. Wow, congrats, ingenious! You found the word.\n')
+                exit()
+            message = get_letter_message(status, guessed_letter)
+
+        else:
+            chances -= 1
+            message = get_letter_message(status, guessed_letter)
+
+            if chances <= 0:
+                print(
+                    f'\nYou couldn\'t find the word succesfully. The word was "{rand_word}".\n')
+                exit()
+            print(f"\nYou missed. You have {chances} chances left.")
+
+        print("")
+        emotion = get_emotion(status)
+        print(f"{emotion} {message}")
+
+        # two line breaks
+        add_linebreak(quantity=2)
+
+        print(get_pretty_masked_word(hidden_word))
+        add_linebreak()
+
+    return None
 
 
 if __name__ == "__main__":
