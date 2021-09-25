@@ -2,7 +2,7 @@ import unittest
 from typing import List
 
 from utils.helper_funcs import (
-    get_guess_occurrences, get_guess_status, get_emotion, get_letter_message)
+    get_guess_occurrences, get_guess_status, get_emotion, get_letter_message, get_pretty_leaderboard)
 from utils.words import get_mapped_letters
 
 
@@ -79,6 +79,18 @@ class HelperFunctionsTest(unittest.TestCase):
         real = "Letter is required."
         self.assertEqual(script, real)
 
+    def test_get_pretty_leaderboard(self):
+        script = get_pretty_leaderboard({'Javid': 1})
+        real = "Javid: 1 point\n"
+        self.assertEqual(script, real)
+
+        script = get_pretty_leaderboard({'Javid': 3})
+        real = "Javid: 3 points\n"
+        self.assertEqual(script, real)
+
+        script = get_pretty_leaderboard({'Javid': 3, "JAXA": 1})
+        real = "Javid: 3 points\nJAXA: 1 point\n"
+        self.assertEqual(script, real)
 
 if __name__ == "__main__":
     unittest.main()

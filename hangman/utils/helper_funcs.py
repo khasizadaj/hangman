@@ -15,7 +15,7 @@ def get_guess_occurrences(guessed_letter: Optional[str] = None, mapped_letters: 
         return "Guessed letter is required."
     if mapped_letters == None:
         return "Dictionary of mapped letters is required."
-    
+
     if mapped_letters == {}:
         return [-1]
 
@@ -88,8 +88,25 @@ def add_linebreak(quantity: int = 1) -> None:
 
     for _ in range(quantity):
         print("")
-    
+
     return None
+
+
+def get_pretty_leaderboard(points: Dict[str, int]) -> str:
+    """
+    Function return prettified string of leaderboard.
+
+    Args:
+        points: dictionary of player names and points
+    """
+
+    pretty_leaderboard = ""
+
+    for player, point in points.items():
+        plural_suffix = "s" if point > 1 else ""
+        pretty_leaderboard += f"{player}: {point} point{plural_suffix}\n"
+
+    return pretty_leaderboard
 
 
 if __name__ == "__main__":
