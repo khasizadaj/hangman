@@ -85,6 +85,7 @@ def add_linebreak(quantity: int = 1) -> None:
     """
     if quantity == 1:
         print("")
+        return None
 
     for _ in range(quantity):
         print("")
