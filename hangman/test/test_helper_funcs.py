@@ -92,5 +92,6 @@ class HelperFunctionsTest(unittest.TestCase):
         real = "Javid: 3 points\nJAXA: 1 point\n"
         self.assertEqual(script, real)
 
+
 if __name__ == "__main__":
     unittest.main()
