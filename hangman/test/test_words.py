@@ -2,7 +2,8 @@ import unittest
 from typing import Dict, List
 
 from utils.words import (get_random_word, get_masked_word, get_mapped_letters,
-                         update_masked_word, get_pretty_masked_word, WORDLIST)
+                         update_masked_word, get_pretty_masked_word, check_provision,
+                         check_input, get_pretty_used_letters)
 
 
 class WordFunctionsTest(unittest.TestCase):
@@ -90,6 +91,92 @@ class WordFunctionsTest(unittest.TestCase):
         script = get_pretty_masked_word(self.test_partially_masked_word_1)
         real = "_ n _"
         self.assertEqual(real, script)
+
+    def test_check_provision(self):
+        script = check_provision("a", ["a", "b"])
+        self.assertTrue(script)
+
+        script = check_provision("a", ["b", "c"])
+        self.assertFalse(script)
+
+        script = check_provision("ab", ["b", "c"])
+        self.assertFalse(script)
+
+        script = check_provision("", ["b", "c"])
+        self.assertFalse(script)
+
+        script = check_provision(None, ["b", "c"])
+        self.assertFalse(script)
+
+        script = check_provision(1, ["b", "c"])
+        self.assertFalse(script)
+
+    def test_check_input(self):
+        input_is_valid, input_message = check_input("a")
+        real_bool = True
+        self.assertEqual(real_bool, input_is_valid)
+        real_message = ""
+        self.assertEqual(real_message, input_message)
+        
+        input_is_valid, input_message = check_input("ab")
+        real_bool = False
+        self.assertEqual(real_bool, input_is_valid)
+        real_message = "You need to provide one letter. What is your guess? "
+        self.assertEqual(real_message, input_message)
+
+        input_is_valid, input_message = check_input("[1]")
+        real_bool = False
+        self.assertEqual(real_bool, input_is_valid)
+        real_message = "You need to provide one letter. What is your guess? "
+        self.assertEqual(real_message, input_message)
+        
+        input_is_valid, input_message = check_input(1)
+        real_bool = False
+        self.assertEqual(real_bool, input_is_valid)
+        real_message = "Input is not string. Provide a string of a letter."
+        self.assertEqual(real_message, input_message)
+
+        input_is_valid, input_message = check_input(1.12)
+        real_bool = False
+        self.assertEqual(real_bool, input_is_valid)
+        real_message = "Input is not string. Provide a string of a letter."
+        self.assertEqual(real_message, input_message)
+
+        input_is_valid, input_message = check_input([1])
+        real_bool = False
+        self.assertEqual(real_bool, input_is_valid)
+        real_message = "Input is not string. Provide a string of a letter."
+        self.assertEqual(real_message, input_message)
+
+        input_is_valid, input_message = check_input(None)
+        real_bool = False
+        self.assertEqual(real_bool, input_is_valid)
+        real_message = "Input is not string. Provide a string of a letter."
+        self.assertEqual(real_message, input_message)
+
+        input_is_valid, input_message = check_input("")
+        real_bool = False
+        self.assertEqual(real_bool, input_is_valid)
+        real_message = "You need to provide one letter, it can't be empty. What is your guess? "
+        self.assertEqual(real_message, input_message)
+        
+        input_is_valid, input_message = check_input("@")
+        real_bool = False
+        self.assertEqual(real_bool, input_is_valid)
+        real_message = "You need to provide a letter, this is not supported. What is your guess? "
+        self.assertEqual(real_message, input_message)
+
+    def test_get_pretty_used_letters(self):
+        script = get_pretty_used_letters(["a", "b", "c"])
+        real = f"You have used these letters so far: \"a, b, c\""
+        self.assertEqual(real, script)
+
+        script = get_pretty_used_letters([])
+        real = "You have not used any letters yet. What are you waiting for!?"
+        self.assertEqual(real, script)
+
+    def test_show_used_letters(self):
+        pass
 
 
 if __name__ == "__main__":
