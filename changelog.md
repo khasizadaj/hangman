@@ -11,8 +11,8 @@
 
 ## version 0.2
 
-- (done) alerting about repeatedly typed letters
-- (done) type "show" keyword to get previously typed letters
+- alerting about repeatedly typed letters
+- type "show" keyword to get previously typed letters
 - multiplayer
 - collecting names of player(s)
 
