@@ -178,6 +178,12 @@ class WordFunctionsTest(unittest.TestCase):
     def test_show_used_letters(self):
         pass
 
+    def test_get_word_details(self):
+        pass
+
+    def test_word_is_found(self):
+        pass
+
 
 if __name__ == "__main__":
     unittest.main()
