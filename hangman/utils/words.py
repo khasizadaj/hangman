@@ -225,12 +225,12 @@ def get_word_details(word: str) -> str:
 def word_is_found(masked_word: List[str]) -> bool:
     """
     Function returns boolean indicating whether word is already found/guessed.
-    
+
     Args:
         masked_word: list of underscores (or already guessed letters in some 
             cases) that represents word user is looking for
     """
-    
+
     return "_" not in masked_word
 
 
