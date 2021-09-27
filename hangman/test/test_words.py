@@ -1,9 +1,13 @@
 import unittest
+import io
+import sys
 from typing import Dict, List
 
+from unittest import mock
 from utils.words import (get_random_word, get_masked_word, get_mapped_letters,
                          update_masked_word, get_pretty_masked_word, check_provision,
-                         check_input, get_pretty_used_letters)
+                         check_input, get_pretty_used_letters, get_guessed_letter,
+                         show_used_letters, get_word_details, word_is_found)
 
 
 class WordFunctionsTest(unittest.TestCase):
@@ -117,7 +121,7 @@ class WordFunctionsTest(unittest.TestCase):
         self.assertEqual(real_bool, input_is_valid)
         real_message = ""
         self.assertEqual(real_message, input_message)
-        
+
         input_is_valid, input_message = check_input("ab")
         real_bool = False
         self.assertEqual(real_bool, input_is_valid)
@@ -129,7 +133,7 @@ class WordFunctionsTest(unittest.TestCase):
         self.assertEqual(real_bool, input_is_valid)
         real_message = "You need to provide one letter. What is your guess? "
         self.assertEqual(real_message, input_message)
-        
+
         input_is_valid, input_message = check_input(1)
         real_bool = False
         self.assertEqual(real_bool, input_is_valid)
@@ -159,7 +163,7 @@ class WordFunctionsTest(unittest.TestCase):
         self.assertEqual(real_bool, input_is_valid)
         real_message = "You need to provide one letter, it can't be empty. What is your guess? "
         self.assertEqual(real_message, input_message)
-        
+
         input_is_valid, input_message = check_input("@")
         real_bool = False
         self.assertEqual(real_bool, input_is_valid)
@@ -175,14 +179,68 @@ class WordFunctionsTest(unittest.TestCase):
         real = "You have not used any letters yet. What are you waiting for!?"
         self.assertEqual(real, script)
 
-    def test_show_used_letters(self):
-        pass
+    def test_show_used_letters_with_letters(self):
+        capturedOutput = io.StringIO()
+        sys.stdout = capturedOutput
+        show_used_letters(["a", "b", "c"])
+        script = capturedOutput.getvalue()
+        real = '\nYou have used these letters so far: "a, b, c"\n\n'
+        self.assertEqual(real, script)
+        sys.stdout = sys.__stdout__
+
+    def test_show_used_letters_no_letter(self):
+        capturedOutput = io.StringIO()
+        sys.stdout = capturedOutput
+        show_used_letters([])
+        script = capturedOutput.getvalue()
+        real = '\nYou have not used any letters yet. What are you waiting for!?\n\n'
+        self.assertEqual(real, script)
+
+        sys.stdout = sys.__stdout__
 
     def test_get_word_details(self):
-        pass
+        script = get_word_details("hey")
+        real = "Word contains 3 letters. Let's find them!"
+        self.assertEqual(real, script)
+
+        script = get_word_details("activity")
+        real = "Word contains 8 letters. Let's find them!"
+        self.assertEqual(real, script)
+
+        script = get_word_details("Active")
+        real = "Word contains 6 letters. Let's find them!"
+        self.assertEqual(real, script)
 
     def test_word_is_found(self):
-        pass
+        script = word_is_found(["_", "a", "g"])
+        self.assertFalse(script)
+
+        script = word_is_found(["b", "a", "g"])
+        self.assertTrue(script)
+
+    @mock.patch('utils.words.input', create=True)
+    def test_get_guessed_letter(self, input):
+        input.side_effect = ["a", "d"]
+
+        s_l, s_p_ls = get_guessed_letter(["a", "b", "c"])
+        r_l = "d"
+        self.assertEqual(r_l, s_l)
+        r_p_ls = ["a", "b", "c", "d"]
+        self.assertEqual(r_p_ls, s_p_ls)
+
+        input.side_effect = ["a", "1", "c", "e"]
+        s_l, s_p_ls = get_guessed_letter(["a", "b", "c"])
+        r_l = "e"
+        self.assertEqual(r_l, s_l)
+        r_p_ls = ["a", "b", "c", "e"]
+        self.assertEqual(r_p_ls, s_p_ls)
+
+        input.side_effect = ["a", "1", "@", "f"]
+        s_l, s_p_ls = get_guessed_letter(["a", "b", "c"])
+        r_l = "f"
+        self.assertEqual(r_l, s_l)
+        r_p_ls = ["a", "b", "c", "f"]
+        self.assertEqual(r_p_ls, s_p_ls)
 
 
 if __name__ == "__main__":
