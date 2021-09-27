@@ -211,12 +211,27 @@ def get_guessed_letter(provided_letters: List[str], first_time: bool = False) ->
     return input_str, used_letters
 
 
-def get_word_details(rand_word: str) -> str:
-    return f"Word contains {len(rand_word)} letters. Let's find them!"
+def get_word_details(word: str) -> str:
+    """
+    Function returns details about word.
+
+    Args:
+        word: word that is provided
+    """
+
+    return f"Word contains {len(word)} letters. Let's find them!"
 
 
-def word_is_found(word: List[str]) -> bool:
-    return "_" not in word
+def word_is_found(masked_word: List[str]) -> bool:
+    """
+    Function returns boolean indicating whether word is already found/guessed.
+    
+    Args:
+        masked_word: list of underscores (or already guessed letters in some 
+            cases) that represents word user is looking for
+    """
+    
+    return "_" not in masked_word
 
 
 def guess_word() -> bool:
