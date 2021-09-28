@@ -4,9 +4,9 @@ from random import randint
 from .helper_funcs import (get_guess_occurrences, get_guess_status,
                            get_emotion, get_letter_message, add_linebreak)
 
-WORDLIST = {"easy": ["a", "about", "above", "across", "act", "actor", "active", "activity",
+WORDLIST = {"easy": ["about", "above", "across", "act", "actor", "active", "activity",
                      "add", "afraid", "after", "again", "age", "ago", "agree", "air", "all",
-                     "alone", "along", "already", "always", "am", "amount", "an", "and", "angry",
+                     "alone", "along", "already", "always", "amount", "and", "angry",
                      "another", "answer", "any", "anyone", "anything", "anytime", "appear",
                      "apple", "are", "area", "arm", "army", "around", "arrive", "art", "as",
                      "ask", "at", "attack", "aunt", "autumn", "away"]}
