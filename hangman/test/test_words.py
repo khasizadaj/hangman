@@ -1,13 +1,14 @@
 import unittest
-import io
+from io import StringIO
 import sys
 from typing import Dict, List
 
 from unittest import mock
+from unittest.mock import patch
 from utils.words import (get_random_word, get_masked_word, get_mapped_letters,
                          update_masked_word, get_pretty_masked_word, check_provision,
                          check_input, get_pretty_used_letters, get_guessed_letter,
-                         show_used_letters, get_word_details, word_is_found)
+                         show_used_letters, get_word_details, word_is_found, guess_word)
 
 
 class WordFunctionsTest(unittest.TestCase):
@@ -180,23 +181,20 @@ class WordFunctionsTest(unittest.TestCase):
         self.assertEqual(real, script)
 
     def test_show_used_letters_with_letters(self):
-        capturedOutput = io.StringIO()
-        sys.stdout = capturedOutput
-        show_used_letters(["a", "b", "c"])
-        script = capturedOutput.getvalue()
         real = '\nYou have used these letters so far: "a, b, c"\n\n'
-        self.assertEqual(real, script)
-        sys.stdout = sys.__stdout__
+
+        with patch('sys.stdout', new=StringIO()) as fake_out:
+            show_used_letters(["a", "b", "c"])
+            script = fake_out.getvalue()
+            self.assertEqual(script, real)
 
     def test_show_used_letters_no_letter(self):
-        capturedOutput = io.StringIO()
-        sys.stdout = capturedOutput
-        show_used_letters([])
-        script = capturedOutput.getvalue()
         real = '\nYou have not used any letters yet. What are you waiting for!?\n\n'
-        self.assertEqual(real, script)
 
-        sys.stdout = sys.__stdout__
+        with patch('sys.stdout', new=StringIO()) as fake_out:
+            show_used_letters([])
+            script = fake_out.getvalue()
+            self.assertEqual(script, real)
 
     def test_get_word_details(self):
         script = get_word_details("hey")
@@ -221,7 +219,6 @@ class WordFunctionsTest(unittest.TestCase):
     @mock.patch('utils.words.input', create=True)
     def test_get_guessed_letter(self, input):
         input.side_effect = ["a", "d"]
-
         s_l, s_p_ls = get_guessed_letter(["a", "b", "c"])
         r_l = "d"
         self.assertEqual(r_l, s_l)
@@ -241,6 +238,20 @@ class WordFunctionsTest(unittest.TestCase):
         self.assertEqual(r_l, s_l)
         r_p_ls = ["a", "b", "c", "f"]
         self.assertEqual(r_p_ls, s_p_ls)
+
+    @mock.patch('utils.words.input', create=True)
+    def test_guess_word(self, input):
+        input.side_effect = ["a", "d", "d", "v", "s", "q", "m", "l"]
+        script: bool = guess_word(provided_word="anger")
+        self.assertFalse(script)
+
+        input.side_effect = ["e", "a", "g", "r"]
+        script: bool = guess_word(provided_word="eager")
+        self.assertTrue(script)
+
+        input.side_effect = ["a"]
+        script: bool = guess_word(provided_word="a")
+        self.assertTrue(script)
 
 
 if __name__ == "__main__":
