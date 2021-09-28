@@ -234,8 +234,8 @@ def word_is_found(masked_word: List[str]) -> bool:
     return "_" not in masked_word
 
 
-def guess_word() -> bool:
-    rand_word = get_random_word(WORDLIST["easy"])
+def guess_word(custom_word: str = None) -> bool:
+    rand_word = custom_word or get_random_word(WORDLIST["easy"])
     hidden_word = get_masked_word(rand_word)
     mapped_letters = get_mapped_letters(rand_word)
 
