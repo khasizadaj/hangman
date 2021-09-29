@@ -8,19 +8,25 @@
 
 ## features
 
-**To be Extended**
 - basic functionalities
-- automatic word (from list of words) provision for user to guess
+    - automatic word (from list of words) provision for user to guess
+    - checker for provided letter
+    - providing 6 chances to guess the word and continue guessing until finding word
+    or using all chances
+- providing emotions based on status of guess, i.e. supporting or praising the user
+- alerting about repeatedly typed letters (for one letter guess)
+- typing "show" keyword to get previously typed letters
+- multiplayer feature
+    - collecting names of player(s)
+    - leaderboard
+    - challenging the opponent by providing custom word
 
 <hr>
 
 ## potential features
 
-- informing user if he/she types previously typed letter
-- **collecting names** of players
-- game for **2 or many players**
-- **providing new word** for opponent (in the next round winner chooses the new word)
-- **drawing a hangman** :)
+> maybe in the next versions :)
+
 - word difficulty option (easy, medium, hard)
 
 ## no way features
