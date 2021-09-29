@@ -15,4 +15,4 @@
 - type "show" keyword to get previously typed letters
 - multiplayer
 - collecting names of player(s)
-- (in progress) providing new word for opponent 
+- providing new word for opponent 
