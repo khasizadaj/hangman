@@ -9,13 +9,10 @@
   or using all chances
 
 
-## _coming in version 0.2_
+## version 0.2
 
 - alerting about repeatedly typed letters
-- collecting names of player(s)
+- type "show" keyword to get previously typed letters
 - multiplayer
-
-
-## _coming in version 0.3_
-
+- collecting names of player(s)
 - providing new word for opponent 
