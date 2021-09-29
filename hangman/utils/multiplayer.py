@@ -1,6 +1,6 @@
 from typing import Tuple, Dict
 
-from utils.words import (guess_word)
+from utils.words import (guess_word, get_random_word, WORDLIST)
 from utils.helper_funcs import (add_linebreak, get_pretty_leaderboard)
 
 
@@ -20,7 +20,8 @@ def start_game_sp(player_name: str) -> None:
         print(message)
         add_linebreak()
 
-        status = guess_word()
+        rand_word = get_random_word(WORDLIST["easy"])
+        status = guess_word(rand_word)
         if status:
             points[player_name] += 1
 
@@ -52,7 +53,15 @@ def start_game_mp(player_names: Tuple[str]) -> None:
         print(message)
         add_linebreak()
 
-        status = guess_word()
+        user_will_add_custom_word = input("Do you wanna challange you friend by yourself? [Y(y)/N(n)] ")
+        if user_will_add_custom_word.lower() == "y":
+            custom_word = input("Enter custom word: ").lower()
+        else:
+            custom_word = None
+
+        rand_word = custom_word or get_random_word(WORDLIST["easy"])
+
+        status = guess_word(rand_word)
         if status:
             points[curr_player] += 1
             if points[curr_player] == winning_point:

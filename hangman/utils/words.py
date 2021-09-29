@@ -172,6 +172,7 @@ def get_guessed_letter(provided_letters: List[str], first_time: bool = False) ->
     # letters are unloaded to new list, in order not to accidentally edit
     # original list
     used_letters = [*provided_letters]
+    used_letters.sort()
 
     # this counter is used to inform user if letter is provided before.
     # it only counts current inputs. it is reset after new and correct input.
@@ -198,7 +199,6 @@ def get_guessed_letter(provided_letters: List[str], first_time: bool = False) ->
 
             else:
                 if repeat_input_counter >= 2:
-                    used_letters.sort()
                     add_linebreak()
                     print(get_pretty_used_letters(used_letters))
 
@@ -234,16 +234,15 @@ def word_is_found(masked_word: List[str]) -> bool:
     return "_" not in masked_word
 
 
-def guess_word(custom_word: str = None) -> bool:
-    rand_word = custom_word or get_random_word(WORDLIST["easy"])
-    hidden_word = get_masked_word(rand_word)
-    mapped_letters = get_mapped_letters(rand_word)
+def guess_word(word: str = None) -> bool:
+    hidden_word = get_masked_word(word)
+    mapped_letters = get_mapped_letters(word)
 
     is_first_guess = True
     provided_letters = []
     chances = 6
 
-    print(get_word_details(rand_word))
+    print(get_word_details(word))
 
     while word_is_found(hidden_word) == False:
         print(get_pretty_masked_word(hidden_word))
@@ -263,7 +262,7 @@ def guess_word(custom_word: str = None) -> bool:
 
             if word_is_found(hidden_word) == True:
                 print(
-                    f'\nAaaand "{guessed_letter}" is last letter. Wow, congrats, ingenious! You found the word, it was "{rand_word}".\n')
+                    f'\nAaaand "{guessed_letter}" is last letter. Wow, congrats, ingenious! You found the word, it was "{word}".\n')
                 return True
 
             message = get_letter_message(status, guessed_letter)
@@ -274,7 +273,7 @@ def guess_word(custom_word: str = None) -> bool:
 
             if chances <= 0:
                 print(
-                    f'\nYou couldn\'t find the word succesfully. The word was "{rand_word}".\n')
+                    f'\nYou couldn\'t find the word succesfully. The word was "{word}".\n')
                 return False
 
             print(f"\nYou missed. You have {chances} chances left.")

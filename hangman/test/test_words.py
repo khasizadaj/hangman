@@ -242,15 +242,15 @@ class WordFunctionsTest(unittest.TestCase):
     @mock.patch('utils.words.input', create=True)
     def test_guess_word(self, input):
         input.side_effect = ["a", "d", "d", "v", "s", "q", "m", "l"]
-        script: bool = guess_word(custom_word="anger")
+        script: bool = guess_word(word="anger")
         self.assertFalse(script)
 
         input.side_effect = ["e", "a", "g", "r"]
-        script: bool = guess_word(custom_word="eager")
+        script: bool = guess_word(word="eager")
         self.assertTrue(script)
 
         input.side_effect = ["a"]
-        script: bool = guess_word(custom_word="a")
+        script: bool = guess_word(word="a")
         self.assertTrue(script)
 
 
