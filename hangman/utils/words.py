@@ -1,15 +1,65 @@
-from typing import List, Dict, Union, Tuple
+"""Module contains functions related words for the game."""
+
+from typing import List, Dict, Tuple
 from random import randint
 
-from .helper_funcs import (get_guess_occurrences, get_guess_status,
-                           get_emotion, get_letter_message, add_linebreak)
+from .helper_funcs import (
+    get_guess_occurrences,
+    get_guess_status,
+    get_emotion,
+    get_letter_message,
+    add_linebreak,
+)
 
-WORDLIST = {"easy": ["about", "above", "across", "act", "actor", "active", "activity",
-                     "add", "afraid", "after", "again", "age", "ago", "agree", "air", "all",
-                     "alone", "along", "already", "always", "amount", "and", "angry",
-                     "another", "answer", "any", "anyone", "anything", "anytime", "appear",
-                     "apple", "are", "area", "arm", "army", "around", "arrive", "art", "as",
-                     "ask", "at", "attack", "aunt", "autumn", "away"]}
+WORDLIST = {
+    "easy": [
+        "about",
+        "above",
+        "across",
+        "act",
+        "actor",
+        "active",
+        "activity",
+        "add",
+        "afraid",
+        "after",
+        "again",
+        "age",
+        "ago",
+        "agree",
+        "air",
+        "all",
+        "alone",
+        "along",
+        "already",
+        "always",
+        "amount",
+        "and",
+        "angry",
+        "another",
+        "answer",
+        "any",
+        "anyone",
+        "anything",
+        "anytime",
+        "appear",
+        "apple",
+        "are",
+        "area",
+        "arm",
+        "army",
+        "around",
+        "arrive",
+        "art",
+        "as",
+        "ask",
+        "at",
+        "attack",
+        "aunt",
+        "autumn",
+        "away",
+    ]
+}
 
 
 def get_random_word(words: List[str]) -> str:
@@ -56,7 +106,7 @@ def check_input(input_str: str) -> Tuple[bool, str]:
     Args
         input_str: input that is provided by user
     """
-    if isinstance(input_str, str) == False:
+    if isinstance(input_str, str) is False:
         return False, "Input is not string. Provide a string of a letter."
 
     if len(input_str) == 1 and input_str.isalpha():
@@ -64,14 +114,20 @@ def check_input(input_str: str) -> Tuple[bool, str]:
 
     elif len(input_str) != 1:
         if input_str == "":
-            return False,  "You need to provide one letter, it can't be empty. What is your guess? "
+            return (
+                False,
+                "You need to provide one letter, it can't be empty. What is your guess? ",
+            )
 
         return False, "You need to provide one letter. What is your guess? "
 
     elif input_str.isnumeric():
         return False, "You need to provide a letter, not number. What is your guess? "
 
-    return False, "You need to provide a letter, this is not supported. What is your guess? "
+    return (
+        False,
+        "You need to provide a letter, this is not supported. What is your guess? ",
+    )
 
 
 def check_provision(input_str: str, provided_letters: List[str]) -> bool:
@@ -89,7 +145,7 @@ def check_provision(input_str: str, provided_letters: List[str]) -> bool:
 
 def get_mapped_letters(word: str) -> Dict[str, List[int]]:
     """
-    Functions returns dictionary of letters and corresponding indices of those 
+    Functions returns dictionary of letters and corresponding indices of those
     letters.
 
     Args:
@@ -109,24 +165,25 @@ def get_mapped_letters(word: str) -> Dict[str, List[int]]:
 
 def get_masked_word(word: str) -> List[str]:
     """
-    Function returns masked letters of word in a list format. Masking is 
+    Function returns masked letters of word in a list format. Masking is
     replacement of letters with underscores.
 
-    Args: 
+    Args:
         word: provided string
     """
 
     return ["_" for _ in word]
 
 
-def update_masked_word(masked_word: List[int],
-                       letter: str, occurences: List[int]) -> List[str]:
+def update_masked_word(
+    masked_word: List[int], letter: str, occurences: List[int]
+) -> List[str]:
     """
-    Function replaces underscores with letter that is found in the masked list of 
+    Function replaces underscores with letter that is found in the masked list of
     letter and return updated word.
 
     Args:
-        masked_word: list of underscores (or already guessed letters in some 
+        masked_word: list of underscores (or already guessed letters in some
             cases) that represents word user is looking for
         letter: letter (string) that is guessed correctly by user
         occurences: indice of guessed letter in the word
@@ -143,11 +200,11 @@ def update_masked_word(masked_word: List[int],
 
 def get_pretty_masked_word(masked_word: List[str]) -> str:
     """
-    Function returns string version of masked word by adding a space between 
+    Function returns string version of masked word by adding a space between
     each letter.
 
     Args:
-        masked_word: list of letters (or already guessed letters in some 
+        masked_word: list of letters (or already guessed letters in some
             cases) that represent word user is looking for
     """
 
@@ -156,12 +213,12 @@ def get_pretty_masked_word(masked_word: List[str]) -> str:
 
 def get_guessed_letter(provided_letters: List[str], first_time: bool = False) -> str:
     """
-    Function prompts user for guess and returns provided guess. It repeatedly 
+    Function prompts user for guess and returns provided guess. It repeatedly
     asks for new guess until input meets requirements (`check_input` function).
 
     Args:
-        first_time: boolean value indicating whether input is asked for first 
-            time 
+        first_time: boolean value indicating whether input is asked for first
+            time
     """
 
     if first_time:
@@ -180,7 +237,7 @@ def get_guessed_letter(provided_letters: List[str], first_time: bool = False) ->
 
     # input_is_correct: input is letter and never used before
     input_is_correct = False
-    while input_is_correct != True:
+    while input_is_correct is not True:
         input_str = input(message)
 
         if input_str == "show":
@@ -188,12 +245,13 @@ def get_guessed_letter(provided_letters: List[str], first_time: bool = False) ->
             message = "What is your guess? "
             continue
 
-        # input_is_valid: if True, it means input doesn't have any errors and is letter
-        # input_message: if input_is_valid is false, it contains error message. Otherwise, it's empty string.
+        # input_is_valid: if True, it means input doesn't have any errors and is
+        # letter input_message: if input_is_valid is false, it contains error
+        # message. Otherwise, it's empty string.
         input_is_valid, input_message = check_input(input_str)
         if input_is_valid:
             is_provided_before = check_provision(input_str, used_letters)
-            if is_provided_before == False:
+            if is_provided_before is False:
                 used_letters.append(input_str)
                 input_is_correct = True
 
@@ -227,7 +285,7 @@ def word_is_found(masked_word: List[str]) -> bool:
     Function returns boolean indicating whether word is already found/guessed.
 
     Args:
-        masked_word: list of underscores (or already guessed letters in some 
+        masked_word: list of underscores (or already guessed letters in some
             cases) that represents word user is looking for
     """
 
@@ -249,7 +307,8 @@ def guess_word(word: str = None) -> bool:
         add_linebreak()
 
         guessed_letter, provided_letters = get_guessed_letter(
-            provided_letters, first_time=is_first_guess)
+            provided_letters, first_time=is_first_guess
+        )
         occurrences = get_guess_occurrences(guessed_letter, mapped_letters)
         status = get_guess_status(occurrences)
 
@@ -257,12 +316,12 @@ def guess_word(word: str = None) -> bool:
             is_first_guess = False
 
         if status:
-            hidden_word = update_masked_word(
-                hidden_word, guessed_letter, occurrences)
+            hidden_word = update_masked_word(hidden_word, guessed_letter, occurrences)
 
             if word_is_found(hidden_word) == True:
                 print(
-                    f'\nAaaand "{guessed_letter}" is last letter. Wow, congrats, ingenious! You found the word, it was "{word}".\n')
+                    f'\nAaaand "{guessed_letter}" is last letter. Wow, congrats, ingenious! You found the word, it was "{word}".\n'
+                )
                 return True
 
             message = get_letter_message(status, guessed_letter)
@@ -273,7 +332,8 @@ def guess_word(word: str = None) -> bool:
 
             if chances <= 0:
                 print(
-                    f'\nYou couldn\'t find the word succesfully. The word was "{word}".\n')
+                    f'\nYou couldn\'t find the word succesfully. The word was "{word}".\n'
+                )
                 return False
 
             print(f"\nYou missed. You have {chances} chances left.")
