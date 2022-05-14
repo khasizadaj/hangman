@@ -2,7 +2,7 @@ from typing import Tuple, Dict
 
 from utils.words import (guess_word, get_random_word, WORDLIST)
 from utils.helper_funcs import (add_linebreak, get_pretty_leaderboard)
-
+from getpass import getpass
 
 def start_game_sp(player_name: str) -> None:
     """
@@ -55,7 +55,7 @@ def start_game_mp(player_names: Tuple[str]) -> None:
 
         user_will_add_custom_word = input("Do you wanna challange you friend by yourself? [Y(y)/N(n)] ")
         if user_will_add_custom_word.lower() == "y":
-            custom_word = input("Enter custom word: ").lower()
+            custom_word = getpass("Enter custom word (typed letters will be not shown, but registered): ").lower()
         else:
             custom_word = None
 
