@@ -1,8 +1,9 @@
-from typing import Tuple, Dict
-
-from utils.words import (guess_word, get_random_word, WORDLIST)
-from utils.helper_funcs import (add_linebreak, get_pretty_leaderboard)
 from getpass import getpass
+from typing import Dict, Tuple
+
+from utils.helper_funcs import add_linebreak, get_pretty_leaderboard
+from utils.words import WORDLIST, get_random_word, guess_word
+
 
 def start_game_sp(player_name: str) -> None:
     """
@@ -53,9 +54,13 @@ def start_game_mp(player_names: Tuple[str]) -> None:
         print(message)
         add_linebreak()
 
-        user_will_add_custom_word = input("Do you wanna challange you friend by yourself? [Y(y)/N(n)] ")
+        user_will_add_custom_word = input(
+            "Do you wanna challange you friend by yourself? [Y(y)/N(n)] "
+        )
         if user_will_add_custom_word.lower() == "y":
-            custom_word = getpass("Enter custom word (typed letters will be not shown, but registered): ").lower()
+            custom_word = getpass(
+                "Enter custom word (typed letters will be not shown, but registered): "
+            ).lower()
         else:
             custom_word = None
 
@@ -68,8 +73,7 @@ def start_game_mp(player_names: Tuple[str]) -> None:
                 print(f"Winner is {curr_player}")
                 exit()
 
-        curr_player_num = get_next_player_number(
-            curr_player_num, len(player_names))
+        curr_player_num = get_next_player_number(curr_player_num, len(player_names))
         print(get_pretty_leaderboard(points))
 
     return None
@@ -77,7 +81,7 @@ def start_game_mp(player_names: Tuple[str]) -> None:
 
 def get_player_names(count: int) -> Tuple[str]:
     """
-    Function ask for names of the players and returns a tuple of player names. 
+    Function ask for names of the players and returns a tuple of player names.
     Amount of players is determined by provided `count` number.
 
     Args
@@ -86,7 +90,7 @@ def get_player_names(count: int) -> Tuple[str]:
 
     players = []
 
-    for p_num in range(1, count+1):
+    for p_num in range(1, count + 1):
         player = input(f"What's your name, player {p_num}?: ")
         players.append(player)
 
@@ -97,7 +101,7 @@ def get_next_player_number(curr_player_num: int, count_of_players: int) -> int:
     """
     Function returns number of player who is gonna play next.
 
-    Args: 
+    Args:
         curr_player_num: number of current player
         count_of_players: quantity of players that are in the game
     """
