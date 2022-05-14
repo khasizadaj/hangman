@@ -1,6 +1,5 @@
 import unittest
 from io import StringIO
-import sys
 from typing import Dict, List
 
 from unittest import mock

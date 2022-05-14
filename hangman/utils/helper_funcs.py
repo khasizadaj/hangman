@@ -1,14 +1,16 @@
 from typing import List, Dict, Optional, Union
 
 
-def get_guess_occurrences(guessed_letter: Optional[str] = None, mapped_letters: Optional[Dict] = None) -> Union[List[int], str]:
+def get_guess_occurrences(
+    guessed_letter: Optional[str] = None, mapped_letters: Optional[Dict] = None
+) -> Union[List[int], str]:
     """
-    Function returns occurences (indices) of guessed_letter in the word which 
+    Function returns occurences (indices) of guessed_letter in the word which
     already defined in mapped_letters.
 
     Args:
         guessed_letter: string of letter that is guessed
-        mapped_letters: letter and indices of letters in a dictionary 
+        mapped_letters: letter and indices of letters in a dictionary
     """
 
     if guessed_letter == None:
@@ -30,7 +32,7 @@ def get_guess_status(occurrences: Optional[List[int]] = None) -> Union[bool, str
     """
     Returns status of guessed letter by checking the occurrences of letter.
 
-    Args: 
+    Args:
         occurrences: indices of letters in a word
     """
     if occurrences is None:
@@ -43,7 +45,7 @@ def get_guess_status(occurrences: Optional[List[int]] = None) -> Union[bool, str
 
 def get_emotion(status: Optional[bool] = None) -> str:
     """
-    Function returns an emotion based on the status of guessed letter. 
+    Function returns an emotion based on the status of guessed letter.
 
     Args:
         status: boolean value indicating correctness of guessed letter
@@ -56,9 +58,11 @@ def get_emotion(status: Optional[bool] = None) -> str:
     return "We'll be successful next time. Cheer up!"
 
 
-def get_letter_message(status: Optional[bool] = None, guessed_letter: Optional[str] = None) -> str:
+def get_letter_message(
+    status: Optional[bool] = None, guessed_letter: Optional[str] = None
+) -> str:
     """
-    Function returns a string containing message about the guessed letter based 
+    Function returns a string containing message about the guessed letter based
     on the status of guess.
 
     Args:
