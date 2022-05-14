@@ -8,11 +8,11 @@
 - providing 6 chances to guess the word and continue guessing until finding word
   or using all chances
 
-
 ## version 0.2
 
 - alerting about repeatedly typed letters
 - type "show" keyword to get previously typed letters
 - multiplayer
 - collecting names of player(s)
-- providing new word for opponent 
+- providing new word for opponent
+- player can challenge another player
