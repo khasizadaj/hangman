@@ -5,18 +5,16 @@ Module contains functions related to game logic. It implements the following:
 """
 
 from getpass import getpass
-from typing import Tuple
+from typing import List
 
-from utils.helper_funcs import (
-    add_linebreak,
-    get_next_player_number,
-    get_pretty_leaderboard,
-)
+from utils.helper_funcs import (add_linebreak, get_next_player_number,
+                                get_pretty_leaderboard)
+from utils.player import Player
 from utils.wordlist import WORDLIST
 from utils.words import get_random_word, guess_word
 
 
-def start_game_sp(player_name: str) -> None:
+def start_game_sp(player: Player) -> None:
     """
     Function handles the game for single player.
 
@@ -24,29 +22,32 @@ def start_game_sp(player_name: str) -> None:
         player_name: name of the player
     """
 
-    points = {player_name: 0}
     to_be_continued = True
 
     while to_be_continued:
-        message = f"Let's find this word, {player_name}"
+        message = f"Let's find this word, {player.name}"
         print(message)
         add_linebreak()
 
         rand_word = get_random_word(WORDLIST["easy"])
         status = guess_word(rand_word)
         if status:
-            points[player_name] += 1
+            player.add_point()
 
+        points = Player.points()
         print(get_pretty_leaderboard(points))
 
         # asking if user wants to continue
         choice = input("Do you want to continue? (Y/N): ")
-        to_be_continued = True if choice.lower() == "y" else False
+
+        to_be_continued = False
+        if choice.lower() == "y":
+            to_be_continued = True
 
     return None
 
 
-def start_game_mp(player_names: Tuple[str]) -> None:
+def start_game_mp(players: List[Player]) -> None:
     """
     Function handles the game for multiple players.
 
@@ -54,13 +55,11 @@ def start_game_mp(player_names: Tuple[str]) -> None:
         player_names: names of the players
     """
 
-    points = {player: 0 for player in player_names}
     winning_point = 3
-    winner_is_decided = False
     curr_player_num = 1
 
-    while winner_is_decided == False:
-        curr_player = player_names[curr_player_num - 1]
+    while True:
+        curr_player = players[curr_player_num - 1]
         message = f"It's your turn, {curr_player}"
         print(message)
         add_linebreak()
@@ -79,15 +78,14 @@ def start_game_mp(player_names: Tuple[str]) -> None:
 
         status = guess_word(rand_word)
         if status:
-            points[curr_player] += 1
-            if points[curr_player] == winning_point:
+            curr_player.add_point()
+            if curr_player.point == winning_point:
                 print(f"Winner is {curr_player}")
                 exit()
 
-        curr_player_num = get_next_player_number(curr_player_num, len(player_names))
-        print(get_pretty_leaderboard(points))
+        curr_player_num = get_next_player_number(curr_player_num, len(players))
 
-    return None
+        print(get_pretty_leaderboard(Player.points()))
 
 
 if __name__ == "__main__":
