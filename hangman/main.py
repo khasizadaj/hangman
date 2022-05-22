@@ -1,7 +1,6 @@
-from typing import List, Dict
+from utils.game import start_game_mp, start_game_sp
+from utils.helper_funcs import get_player_names
 
-from utils.multiplayer import (get_player_names, start_game_mp,  start_game_sp)
-from utils.words import guess_word
 
 def main() -> None:
     count = int(input("How many players will be in the game?: "))
@@ -14,6 +13,7 @@ def main() -> None:
         start_game_sp(player)
 
     return None
+
 
 if __name__ == "__main__":
     main()

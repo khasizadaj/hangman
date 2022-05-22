@@ -1,8 +1,19 @@
-from getpass import getpass
-from typing import Dict, Tuple
+"""
+Module contains functions related to game logic. It implements the following:
+- single player mode
+- multi players mode 
+"""
 
-from utils.helper_funcs import add_linebreak, get_pretty_leaderboard
-from utils.words import WORDLIST, get_random_word, guess_word
+from getpass import getpass
+from typing import Tuple
+
+from utils.helper_funcs import (
+    add_linebreak,
+    get_next_player_number,
+    get_pretty_leaderboard,
+)
+from utils.wordlist import WORDLIST
+from utils.words import get_random_word, guess_word
 
 
 def start_game_sp(player_name: str) -> None:
@@ -77,40 +88,6 @@ def start_game_mp(player_names: Tuple[str]) -> None:
         print(get_pretty_leaderboard(points))
 
     return None
-
-
-def get_player_names(count: int) -> Tuple[str]:
-    """
-    Function ask for names of the players and returns a tuple of player names.
-    Amount of players is determined by provided `count` number.
-
-    Args
-        count: quantity of players that are in the game
-    """
-
-    players = []
-
-    for p_num in range(1, count + 1):
-        player = input(f"What's your name, player {p_num}?: ")
-        players.append(player)
-
-    return tuple(players)
-
-
-def get_next_player_number(curr_player_num: int, count_of_players: int) -> int:
-    """
-    Function returns number of player who is gonna play next.
-
-    Args:
-        curr_player_num: number of current player
-        count_of_players: quantity of players that are in the game
-    """
-
-    next_player_num = curr_player_num + 1
-    if count_of_players < next_player_num:
-        next_player_num = 1
-
-    return next_player_num
 
 
 if __name__ == "__main__":

@@ -1,65 +1,17 @@
-"""Module contains functions related words for the game."""
+"""
+Module contains functions related to different steps of the game.
+"""
 
-from typing import List, Dict, Tuple
 from random import randint
+from typing import Dict, List, Tuple
 
 from .helper_funcs import (
+    add_linebreak,
+    get_emotion,
     get_guess_occurrences,
     get_guess_status,
-    get_emotion,
     get_letter_message,
-    add_linebreak,
 )
-
-WORDLIST = {
-    "easy": [
-        "about",
-        "above",
-        "across",
-        "act",
-        "actor",
-        "active",
-        "activity",
-        "add",
-        "afraid",
-        "after",
-        "again",
-        "age",
-        "ago",
-        "agree",
-        "air",
-        "all",
-        "alone",
-        "along",
-        "already",
-        "always",
-        "amount",
-        "and",
-        "angry",
-        "another",
-        "answer",
-        "any",
-        "anyone",
-        "anything",
-        "anytime",
-        "appear",
-        "apple",
-        "are",
-        "area",
-        "arm",
-        "army",
-        "around",
-        "arrive",
-        "art",
-        "as",
-        "ask",
-        "at",
-        "attack",
-        "aunt",
-        "autumn",
-        "away",
-    ]
-}
 
 
 def get_random_word(words: List[str]) -> str:

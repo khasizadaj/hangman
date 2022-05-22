@@ -1,4 +1,8 @@
-from typing import List, Dict, Optional, Union
+"""
+Module contains functions required for game but not the main part of the game.
+"""
+
+from typing import Dict, List, Optional, Tuple, Union
 
 
 def get_guess_occurrences(
@@ -112,6 +116,40 @@ def get_pretty_leaderboard(points: Dict[str, int]) -> str:
         pretty_leaderboard += f"{player}: {point} point{plural_suffix}\n"
 
     return pretty_leaderboard
+
+
+def get_player_names(count: int) -> Tuple[str]:
+    """
+    Function ask for names of the players and returns a tuple of player names.
+    Amount of players is determined by provided `count` number.
+
+    Args
+        count: quantity of players that are in the game
+    """
+
+    players = []
+
+    for p_num in range(1, count + 1):
+        player = input(f"What's your name, player {p_num}?: ")
+        players.append(player)
+
+    return tuple(players)
+
+
+def get_next_player_number(curr_player_num: int, count_of_players: int) -> int:
+    """
+    Function returns number of player who is gonna play next.
+
+    Args:
+        curr_player_num: number of current player
+        count_of_players: quantity of players that are in the game
+    """
+
+    next_player_num = curr_player_num + 1
+    if count_of_players < next_player_num:
+        next_player_num = 1
+
+    return next_player_num
 
 
 if __name__ == "__main__":
