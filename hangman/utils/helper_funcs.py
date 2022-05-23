@@ -4,6 +4,8 @@ Module contains functions required for game but not the main part of the game.
 
 from typing import Dict, List, Optional, Tuple, Union
 
+from utils.wordlist import DIFFICULTIES
+
 
 def get_guess_occurrences(
     guessed_letter: Optional[str] = None, mapped_letters: Optional[Dict] = None
@@ -150,6 +152,26 @@ def get_next_player_number(curr_player_num: int, count_of_players: int) -> int:
         next_player_num = 1
 
     return next_player_num
+
+
+def get_difficulty_level() -> str:
+    print(
+        "Which difficulty level would you like to play?\n\n"
+        + "0. All"
+        + "\n1. Easy (3-5 letter words)"
+        + "\n2. Medium (6-7 letter words)"
+        + "\n3. Hard (8 and more letter words)"
+    )
+    difficulty_id = int(input("Write your choice in number (e.g. 1): "))
+    difficulty_level = get_difficulty_value(difficulty_id)
+    if difficulty_level is None:
+        return "all"
+
+    return difficulty_level
+
+
+def get_difficulty_value(difficulty_id: int):
+    return DIFFICULTIES.get(difficulty_id, None)
 
 
 if __name__ == "__main__":

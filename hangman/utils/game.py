@@ -1,20 +1,22 @@
 """
 Module contains functions related to game logic. It implements the following:
 - single player mode
-- multi players mode 
+- multi players mode
 """
 
 from getpass import getpass
 from typing import List
 
-from utils.helper_funcs import (add_linebreak, get_next_player_number,
-                                get_pretty_leaderboard)
+from utils.helper_funcs import (
+    add_linebreak,
+    get_next_player_number,
+    get_pretty_leaderboard,
+)
 from utils.player import Player
-from utils.wordlist import WORDLIST
 from utils.words import get_random_word, guess_word
 
 
-def start_game_sp(player: Player) -> None:
+def start_game_sp(player: Player, words: List[str]) -> None:
     """
     Function handles the game for single player.
 
@@ -29,7 +31,7 @@ def start_game_sp(player: Player) -> None:
         print(message)
         add_linebreak()
 
-        rand_word = get_random_word(WORDLIST["easy"])
+        rand_word = get_random_word(words)
         status = guess_word(rand_word)
         if status:
             player.add_point()
@@ -47,7 +49,7 @@ def start_game_sp(player: Player) -> None:
     return None
 
 
-def start_game_mp(players: List[Player]) -> None:
+def start_game_mp(players: List[Player], words: List[str]) -> None:
     """
     Function handles the game for multiple players.
 
@@ -74,7 +76,7 @@ def start_game_mp(players: List[Player]) -> None:
         else:
             custom_word = None
 
-        rand_word = custom_word or get_random_word(WORDLIST["easy"])
+        rand_word = custom_word or get_random_word(words)
 
         status = guess_word(rand_word)
         if status:

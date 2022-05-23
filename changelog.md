@@ -16,3 +16,7 @@
 - collecting names of player(s)
 - providing new word for opponent
 - player can challenge another player
+
+## version 0.3
+
+- added functionality to choose a difficulty level for words
