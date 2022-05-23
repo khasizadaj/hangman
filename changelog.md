@@ -19,4 +19,5 @@
 
 ## version 0.3
 
+- Player class added to have clear game state management
 - added functionality to choose a difficulty level for words
