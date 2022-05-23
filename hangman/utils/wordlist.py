@@ -66,7 +66,7 @@ DIFFICULTIES = {
 }
 
 
-def get_wordlist(difficulty_level: int = 0):
+def get_wordlist(difficulty_level: str = "all"):
     if difficulty_level == "all":
         return get_all_words()
 

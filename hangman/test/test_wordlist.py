@@ -1,21 +1,20 @@
 import unittest
 
 from utils import wordlist
-from utils.wordlist import get_difficulty_value, get_wordlist
 
 
 class TestWordList(unittest.TestCase):
     def test_get_wordlist(self):
-        test = wordlist.get_wordlist(1)
+        test = wordlist.get_wordlist("easy")
         self.assertListEqual(test, wordlist.ALL_WORDS["easy"])
 
-        test = wordlist.get_wordlist(2)
+        test = wordlist.get_wordlist("medium")
         self.assertListEqual(test, wordlist.ALL_WORDS["medium"])
 
-        test = wordlist.get_wordlist(3)
+        test = wordlist.get_wordlist("hard")
         self.assertListEqual(test, wordlist.ALL_WORDS["hard"])
 
-        test = wordlist.get_wordlist(0)
+        test = wordlist.get_wordlist("all")
         real = (
             wordlist.ALL_WORDS["easy"]
             + wordlist.ALL_WORDS["medium"]
