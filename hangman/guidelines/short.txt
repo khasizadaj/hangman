@@ -1,0 +1,10 @@
+
+Hi! I welcome you to the "Hangman" game made by JAXA. 
+
+Game is based on the infamous "Hangman" game aand it is almost the same. You need to guess the word that is provided for you. You can only provide one letter at a time. 
+
+===
+Why is it "almost" the same? Glad you asked! Because you can challange your friends, when it's their turn. If they can't guess the word, you will earn points for this. Moreover, you can play this with your friends in pultiplayer mode. Leaderboard is provided by the game.
+===
+
+Without further ado, let's rock 'n roll!!!

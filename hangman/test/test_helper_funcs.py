@@ -107,6 +107,16 @@ class HelperFunctionsTest(unittest.TestCase):
         test = h.get_difficulty_value(-1)
         self.assertIsNone(test)
 
+    def test_get_guidelines(self):
+        test = h.get_guidelines()
+        self.assertIsInstance(test, str)
+
+        test = h.get_guidelines("short")
+        self.assertIsInstance(test, str)
+
+        test = h.get_guidelines("long")
+        self.assertIsInstance(test, str)
+
 
 if __name__ == "__main__":
     unittest.main()
