@@ -100,11 +100,11 @@ class Game:
             add_linebreak()
 
             user_will_add_custom_word = input(
-                "Do you wanna challange you friend by yourself? [Y(y)/N(n)] "
+                "Do you wanna be challanged by your friend? [Y(y)/N(n)] "
             )
             if user_will_add_custom_word.lower() == "y":
                 custom_word = getpass(
-                    "Enter custom word (typed letters will be not shown, but registered): "
+                    "Choose your friend and ask him/her to type custom word (typed letters will be not shown, but registered): "
                 ).lower()
             else:
                 custom_word = None

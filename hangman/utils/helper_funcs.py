@@ -2,6 +2,7 @@
 Module contains functions required for game but not the main part of the game.
 """
 
+import os
 from typing import Dict, List, Optional, Tuple, Union
 
 from utils.wordlist import DIFFICULTIES
@@ -156,13 +157,13 @@ def get_next_player_number(curr_player_num: int, count_of_players: int) -> int:
 
 def get_difficulty_level() -> str:
     print(
-        "Which difficulty level would you like to play?\n\n"
+        "\n"
         + "0. All"
         + "\n1. Easy (3-5 letter words)"
         + "\n2. Medium (6-7 letter words)"
-        + "\n3. Hard (8 and more letter words)"
+        + "\n3. Hard (8 and more letter words)\n"
     )
-    difficulty_id = int(input("Write your choice in number (e.g. 1): "))
+    difficulty_id = int(input("Write your choice with number (e.g. 1): "))
     difficulty_level = get_difficulty_value(difficulty_id)
     if difficulty_level is None:
         return "all"
@@ -172,6 +173,15 @@ def get_difficulty_level() -> str:
 
 def get_difficulty_value(difficulty_id: int):
     return DIFFICULTIES.get(difficulty_id, None)
+
+
+def get_guidelines(version: str = "short"):
+    if version not in ["short", "long"]:
+        return ""
+
+    path_to = f".\\guidelines\\{version}.txt"
+    with open(path_to) as guide:
+        return guide.read()
 
 
 if __name__ == "__main__":
