@@ -20,6 +20,7 @@
   - collecting names of player(s)
   - leaderboard
   - challenging the opponent by providing custom word
+- providing words with different difficulty levels
 
 <hr>
 
@@ -27,11 +28,12 @@
 
 > maybe in the next versions :)
 
-- [ ] word difficulty option (easy, medium, hard)
+- [x] word difficulty option (easy, medium, hard)
 - [ ] ask how many rounds players want to play
 - [ ] provide hints after 3 consecutive mistakes
 - [ ] guidelines would be good to have
 - [ ] clear screen after each turn (if possible)
+- [ ] different points for normal guesses and challanged guesses
 
 ## no way features
 
