@@ -21,3 +21,7 @@
 
 - Player class added to have clear game state management
 - added functionality to choose a difficulty level for words
+
+## version 0.4
+
+- Game class added to have all game logic in one place
