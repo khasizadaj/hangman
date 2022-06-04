@@ -1,7 +1,11 @@
+"""Module contains class&functions related to players."""
+
+
 class Player:
     """Implements player logic."""
 
     _all_players = []
+    hints_count: int = 3
 
     def __init__(self, name: str = "Player X", point: int = 0):
         self._all_players.append(self)

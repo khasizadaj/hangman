@@ -76,7 +76,7 @@ class Word:
 
         return " ".join(self.masked)
 
-    def guess_word(self) -> bool:
+    def guess_word(self, hints_count: int) -> bool:
         """
         Implements word guessing logic of the game.
         """
@@ -102,7 +102,12 @@ class Word:
                 if guessed_letter == "show":
                     print(self.get_pretty_used_letters(all_guessed_letters))
                 elif guessed_letter == "hint":
-                    print(self.get_hint())
+                    if hints_count > 0:
+                        hints_count -= 1
+                        print(self.get_hint())
+                        print(f"You have {hints_count} hints available.")
+                    else:
+                        print("Unfortunately, you cannot have hints anymore.")
                 add_linebreak()
                 continue
 
@@ -133,12 +138,12 @@ class Word:
             print(
                 f'\nYou couldn\'t find the word succesfully. The word was "{self.plain}".\n'
             )
-            return False
+            return False, hints_count
 
         print(
             f'\nAaaand "{guessed_letter}" is last letter. Wow, congrats, ingenious! You found the word, it was "{self.plain}".\n'
         )
-        return True
+        return True, hints_count
 
     def get_letter_occurrences(
         self,

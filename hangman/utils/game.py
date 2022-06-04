@@ -87,7 +87,8 @@ class Game:
             add_linebreak()
 
             rand_word = words.get_random_word()
-            status = rand_word.guess_word()
+            status, updated_hints_count = rand_word.guess_word(player.hints_count)
+            player.hints_count = updated_hints_count
 
             if status:
                 print("\nUpdating leaderboard ...")
