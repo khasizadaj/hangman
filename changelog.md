@@ -25,3 +25,15 @@
 ## version 0.4
 
 - Game class added to have all game logic in one place
+
+## version 0.5
+
+- guidelines added for the game
+
+## version 2.0
+
+- Word and Words class added to simplify codebase
+- wordlist updated and all words have hints
+- Hint functionality added for words
+- different points for normal words (1) and custom words (2 pts)
+- codebase refactored
