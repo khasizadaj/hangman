@@ -13,8 +13,13 @@ class Player:
         self.name = name
         self.point = point
 
-    def add_point(self):
-        self.point += 1
+    def add_point(self, custom_word=True):
+        if custom_word:
+            added_point = 2
+        else:
+            added_point = 1
+
+        self.point += added_point
         return self.point
 
     @classmethod

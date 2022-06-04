@@ -24,7 +24,7 @@ class Game:
         words: Words,
         players=List[Player],
         number_of_players: int = 1,
-        winning_point: int = 3,
+        winning_point: int = 5,
     ):
         self.words = words
         self.players = players
@@ -136,6 +136,8 @@ class Game:
 
             is_guessed = word.guess_word()
             if is_guessed:
+                if custom_word is not None:
+                    curr_player.add_point(custom_word=True)
                 curr_player.add_point()
 
                 if self.is_winner(curr_player):
