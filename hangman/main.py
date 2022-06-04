@@ -2,6 +2,7 @@ from utils.game import Game
 from utils.helper_funcs import get_difficulty_level, get_guidelines, get_player_names
 from utils.player import Player
 from utils.wordlist import get_wordlist
+from utils.words import Words
 
 
 def main() -> None:
@@ -26,15 +27,15 @@ def main() -> None:
         "Last but not least I need to know in which difficulty level do you want to play."
     )
     difficulty_level = get_difficulty_level()
-    words = get_wordlist(difficulty_level)
+    words = Words(difficulty_level)
 
     # create instances for each player
     for player in player_names:
         Player(player)
 
     print("\nAlrighty!!! We can start the game now. Good luck to all of you.\n\n")
-    game = Game(number_of_players=number_of_players)
-    game.start(Player.all(), words)
+    game = Game(number_of_players=number_of_players, words=words, players=Player.all())
+    game.start()
 
 
 if __name__ == "__main__":

@@ -1,9 +1,4 @@
-class IterPlayer(type):
-    def __iter__(cls):
-        return iter(cls._all_players)
-
-
-class Player(metaclass=IterPlayer):
+class Player:
     """Implements player logic."""
 
     _all_players = []
@@ -28,6 +23,7 @@ class Player(metaclass=IterPlayer):
         Function return leaderboard table for all players.
         It consists of name and points of all players.
         """
+        # TODO Consider having different people with same name
         return {player.name: player.point for player in cls.all()}
 
     def __str__(self) -> str:

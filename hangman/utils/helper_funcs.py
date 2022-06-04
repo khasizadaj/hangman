@@ -2,52 +2,21 @@
 Module contains functions required for game but not the main part of the game.
 """
 
-import os
+
+from os import name, system
 from typing import Dict, List, Optional, Tuple, Union
 
 from utils.wordlist import DIFFICULTIES
 
 
-def get_guess_occurrences(
-    guessed_letter: Optional[str] = None, mapped_letters: Optional[Dict] = None
-) -> Union[List[int], str]:
-    """
-    Function returns occurences (indices) of guessed_letter in the word which
-    already defined in mapped_letters.
+def clear_console() -> None:
+    # for windows
+    if name == "nt":
+        _ = system("cls")
 
-    Args:
-        guessed_letter: string of letter that is guessed
-        mapped_letters: letter and indices of letters in a dictionary
-    """
-
-    if guessed_letter == None:
-        return "Guessed letter is required."
-    if mapped_letters == None:
-        return "Dictionary of mapped letters is required."
-
-    if mapped_letters == {}:
-        return [-1]
-
-    if guessed_letter in mapped_letters.keys():
-        indices = mapped_letters[guessed_letter]
-        return indices
-
-    return [-1]
-
-
-def get_guess_status(occurrences: Optional[List[int]] = None) -> Union[bool, str]:
-    """
-    Returns status of guessed letter by checking the occurrences of letter.
-
-    Args:
-        occurrences: indices of letters in a word
-    """
-    if occurrences is None:
-        return "Occurences (positions) are required."
-
-    if occurrences == [] or occurrences == [-1]:
-        return False
-    return True
+    # for mac and linux
+    else:
+        _ = system("clear")
 
 
 def get_emotion(status: Optional[bool] = None) -> str:
@@ -137,22 +106,6 @@ def get_player_names(count: int) -> Tuple[str]:
         players.append(player)
 
     return tuple(players)
-
-
-def get_next_player_number(curr_player_num: int, count_of_players: int) -> int:
-    """
-    Function returns number of player who is gonna play next.
-
-    Args:
-        curr_player_num: number of current player
-        count_of_players: quantity of players that are in the game
-    """
-
-    next_player_num = curr_player_num + 1
-    if count_of_players < next_player_num:
-        next_player_num = 1
-
-    return next_player_num
 
 
 def get_difficulty_level() -> str:

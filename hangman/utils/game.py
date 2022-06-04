@@ -5,35 +5,51 @@ Module contains functions related to game logic. It implements the following:
 """
 
 import sys
-from getpass import getpass
+import time
 from typing import List
 
-from utils.helper_funcs import (
-    add_linebreak,
-    get_next_player_number,
-    get_pretty_leaderboard,
-)
+from utils.helper_funcs import add_linebreak, clear_console, get_pretty_leaderboard
 from utils.player import Player
-from utils.words import get_random_word, guess_word
+from utils.words import Words, get_custom_word
 
 
 class Game:
-    def __init__(self, number_of_players: int = 1, winning_point: int = 3):
+    """
+    Implements game logic of the "Hangman" game. It contains single player and
+    multi player game modes.
+    """
+
+    def __init__(
+        self,
+        words: Words,
+        players=List[Player],
+        number_of_players: int = 1,
+        winning_point: int = 3,
+    ):
+        self.words = words
+        self.players = players
         self.number_of_players = number_of_players
         self.winning_point = winning_point
         self.curr_player_id = 1
         self._is_continuing = True
 
-    def start(self, players: List[Player], words: List[str]) -> None:
+    def start(self) -> None:
+        """
+        Function initiates the game based on the number of players in the game.
+        """
         if self.number_of_players > 1:
-            self.multiplayer_mode(players, words)
+            self.multiplayer_mode(self.players, self.words)
 
-        self.single_player_mode(players, words)
+        self.single_player_mode(self.players[0], self.words)
 
     def get_current_player(self, players: List[Player]) -> Player:
+        """Function returns the current player in the game."""
+
         return players[self.curr_player_id - 1]
 
     def is_winner(self, player: Player) -> bool:
+        """Function returns whether player has won the game."""
+
         return player.point == self.winning_point
 
     def move_to_next_player(self) -> int:
@@ -57,7 +73,7 @@ class Game:
     def is_continuing(self):
         return self._is_continuing
 
-    def single_player_mode(self, player: Player, words: List[str]) -> None:
+    def single_player_mode(self, player: Player, words: Words) -> None:
         """
         Function handles the game for single player.
 
@@ -70,13 +86,20 @@ class Game:
             print(message)
             add_linebreak()
 
-            rand_word = get_random_word(words)
-            status = guess_word(rand_word)
+            rand_word = words.get_random_word()
+            status = rand_word.guess_word()
+
             if status:
+                print("\nUpdating leaderboard ...")
                 player.add_point()
+            else:
+                print("\nGetting leaderboard ...")
+            time.sleep(3)
+            clear_console()
 
             points = Player.points()
-            print(get_pretty_leaderboard(points))
+            self.print_leaderboard(points)
+            add_linebreak()
 
             # asking if user wants to continue
             choice = input("Do you want to continue? (Y/N): ")
@@ -85,7 +108,7 @@ class Game:
 
         return None
 
-    def multiplayer_mode(self, players: List[Player], words: List[str]) -> None:
+    def multiplayer_mode(self, players: List[Player], words: Words) -> None:
         """
         Function handles the game for multiple players.
 
@@ -99,32 +122,45 @@ class Game:
             print(message)
             add_linebreak()
 
-            user_will_add_custom_word = input(
+            user_choice = input(
                 "Do you wanna be challanged by your friend? [Y(y)/N(n)] "
             )
-            if user_will_add_custom_word.lower() == "y":
-                custom_word = getpass(
-                    "Choose your friend and ask him/her to type custom word (typed letters will be not shown, but registered): "
-                ).lower()
+            if user_choice.lower() == "y":
+                custom_word = get_custom_word()
             else:
                 custom_word = None
 
-            rand_word = custom_word or get_random_word(words)
+            word = custom_word or words.get_random_word()
+            print(word.details)
 
-            status = guess_word(rand_word)
-            if status:
+            is_guessed = word.guess_word()
+            if is_guessed:
                 curr_player.add_point()
+
                 if self.is_winner(curr_player):
                     self.update_continuation_state()
                     break
 
-            # curr_player_num = get_next_player_number(curr_player_num, len(players))
+                print("\nUpdating leaderboard ...")
+            else:
+                print("\nGetting leaderboard ...")
+
+            time.sleep(3)
+            clear_console()
+
             self.move_to_next_player()
 
-            print(get_pretty_leaderboard(Player.points()))
+            self.print_leaderboard(Player.points())
 
         print(f"Winner is {curr_player}")
         sys.exit()
+
+    def print_leaderboard(self, points) -> None:
+        """Prints the leaderboard in a preety format."""
+
+        print("LEADERBOARD\n==============\n")
+        print(get_pretty_leaderboard(points))
+        print("--------------")
 
 
 if __name__ == "__main__":
