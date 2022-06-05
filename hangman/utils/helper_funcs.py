@@ -4,7 +4,7 @@ Module contains functions required for game but not the main part of the game.
 
 
 from os import name, system
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Dict, List, Optional, Tuple
 
 from utils.wordlist import DIFFICULTIES
 
@@ -128,7 +128,27 @@ def get_difficulty_value(difficulty_id: int):
     return DIFFICULTIES.get(difficulty_id, None)
 
 
+def get_winning_point() -> int:
+    """Return value that is provided by the user for winning point."""
+    message = "\n Type winning point here: "
+    while True:
+        winning_point = input(message)
+        if winning_point.isnumeric():
+            winning_point = int(winning_point)
+            break
+
+        if winning_point == "":
+            winning_point = None
+            break
+
+        message = "\n Please, provide a number:"
+
+    return winning_point
+
+
 def get_guidelines(version: str = "short"):
+    """Returns short or long guidelines for the game."""
+
     if version not in ["short", "long"]:
         return ""
 
@@ -139,3 +159,4 @@ def get_guidelines(version: str = "short"):
 
 if __name__ == "__main__":
     print("Module contains general helper functions for hangman.")
+    print(get_winning_point())

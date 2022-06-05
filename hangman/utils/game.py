@@ -19,19 +19,23 @@ class Game:
     multi player game modes.
     """
 
+    winning_point = 5
+
     def __init__(
         self,
         words: Words,
         players=List[Player],
         number_of_players: int = 1,
-        winning_point: int = 5,
+        winning_point: int = None,
     ):
         self.words = words
         self.players = players
         self.number_of_players = number_of_players
-        self.winning_point = winning_point
         self.curr_player_id = 1
         self._is_continuing = True
+
+        if winning_point is not None:
+            self.winning_point = winning_point
 
     def start(self) -> None:
         """
@@ -50,7 +54,7 @@ class Game:
     def is_winner(self, player: Player) -> bool:
         """Function returns whether player has won the game."""
 
-        return player.point == self.winning_point
+        return player.point >= self.winning_point
 
     def move_to_next_player(self) -> int:
         if self.number_of_players == 1:
@@ -132,13 +136,16 @@ class Game:
                 custom_word = None
 
             word = custom_word or words.get_random_word()
-            print(word.details)
+            print(word.details())
 
-            is_guessed = word.guess_word()
+            is_guessed, updated_hints_count = word.guess_word(curr_player.hints_count)
+            curr_player.hints_count = updated_hints_count
+
             if is_guessed:
                 if custom_word is not None:
                     curr_player.add_point(custom_word=True)
-                curr_player.add_point()
+                else:
+                    curr_player.add_point()
 
                 if self.is_winner(curr_player):
                     self.update_continuation_state()
@@ -155,15 +162,19 @@ class Game:
 
             self.print_leaderboard(Player.points())
 
+        self.print_leaderboard(Player.points())
         print(f"Winner is {curr_player}")
         sys.exit()
 
     def print_leaderboard(self, points) -> None:
         """Prints the leaderboard in a preety format."""
 
-        print("LEADERBOARD\n==============\n")
+        # TODO leaderboard should be aware of the players in the game and print accordingly (winning point)
+        print("LEADERBOARD")
+        print("============================\n")
         print(get_pretty_leaderboard(points))
-        print("--------------")
+        print(f"\nWinning point was {self.winning_point}.")
+        print("----------------------------")
 
 
 if __name__ == "__main__":

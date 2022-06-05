@@ -13,7 +13,9 @@ class Player:
         self.name = name
         self.point = point
 
-    def add_point(self, custom_word=True):
+    def add_point(self, custom_word=False):
+        """Adds point(s) for the plaayer that guesses the word correctly."""
+
         if custom_word:
             added_point = 2
         else:

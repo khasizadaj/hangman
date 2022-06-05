@@ -25,6 +25,8 @@ TODO rules for the game
 - providing words with different difficulty levels
 - different points for normal words (1) and custom words (2 pts)
 - chance to get 3 hints during one game
+- ask how many rounds players want to play
+- prompt for providing hint when 2 chances are left
 
 <hr>
 
@@ -32,8 +34,6 @@ TODO rules for the game
 
 > maybe in the next versions :)
 
-- [ ] ask how many rounds players want to play
-- [ ] provide (prompt) hints after 3 consecutive mistakes
 - [ ] add detailed guideline (long version)
 
 ## no way features

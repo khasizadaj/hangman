@@ -84,6 +84,8 @@ class Word:
         is_first_guess = True
         all_guessed_letters = []
         chances = 6
+        hint_option_prompted = False
+        hint_used = False
 
         print(self.pretty_masked)
         add_linebreak()
@@ -102,12 +104,20 @@ class Word:
                 if guessed_letter == "show":
                     print(self.get_pretty_used_letters(all_guessed_letters))
                 elif guessed_letter == "hint":
-                    if hints_count > 0:
-                        hints_count -= 1
-                        print(self.get_hint())
-                        print(f"You have {hints_count} hints available.")
+                    if self.hint is None:
+                        print("Sorry, word doesn't have a hint or it is custom word.")
+                    elif hint_used is True:
+                        print(
+                            f'You have already asked for a hint. It was "{self.hint}"'
+                        )
                     else:
-                        print("Unfortunately, you cannot have hints anymore.")
+                        if hints_count > 0:
+                            hints_count -= 1
+                            hint_used = True
+                            print(f"\n{self.get_hint()}")
+                            print(f"You have {hints_count} hints available.")
+                        else:
+                            print("Unfortunately, you cannot have hints anymore.")
                 add_linebreak()
                 continue
 
@@ -118,10 +128,25 @@ class Word:
 
                 if self.is_found():
                     break
-
             else:
                 chances -= 1
                 print(f"\nYou missed. You have {chances} chances left.")
+
+            if chances == 2 and hint_option_prompted is False and hint_used is False:
+                hint_wanted = input(
+                    "Would you like to get a hint for the word? [Y(y)/N(n)]: "
+                )
+                if hint_wanted == "y":
+                    if self.hint is None:
+                        print("Sorry, word doesn't have a hint or it is custom word.")
+                    else:
+                        if hints_count > 0:
+                            hints_count -= 1
+                            hint_option_prompted = True
+                            print(f"\n{self.get_hint()}")
+                            print(f"You have {hints_count} hints available.")
+                        else:
+                            print("Unfortunately, you cannot have hints anymore.")
 
             add_linebreak()
             message = get_letter_message(is_guessed_correctly, guessed_letter)
@@ -226,11 +251,11 @@ class Word:
 
         return "_" not in self.masked
 
-    def get_hint(self):
+    def get_hint(self) -> Optional[str]:
         """Function returns string with hint for the word."""
 
         if self.hint is None:
-            return "Sorry, word doesn't have a hint or it is custom word."
+            return None
 
         return f"Hint: {self.hint}"
 
