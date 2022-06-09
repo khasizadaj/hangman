@@ -1,5 +1,7 @@
 """Module contains class&functions related to players."""
 
+from string import digits
+
 
 class Player:
     """Implements player logic."""
@@ -8,10 +10,14 @@ class Player:
     hints_count: int = 3
 
     def __init__(self, name: str = "Player X", point: int = 0):
-        self._all_players.append(self)
+        names = [player.name for player in self._all_players if player.name == name]
 
-        self.name = name
+        if len(names) != 0:
+            self.name = f"{name} {digits[len(names)]}"
+        else:
+            self.name = name
         self.point = point
+        self._all_players.append(self)
 
     def add_point(self, custom_word=False):
         """Adds point(s) for the plaayer that guesses the word correctly."""
@@ -26,6 +32,8 @@ class Player:
 
     @classmethod
     def all(cls):
+        """Return list of all players."""
+
         return cls._all_players
 
     @classmethod
@@ -34,8 +42,15 @@ class Player:
         Function return leaderboard table for all players.
         It consists of name and points of all players.
         """
-        # TODO Consider having different people with same name
+
         return {player.name: player.point for player in cls.all()}
 
     def __str__(self) -> str:
         return self.name.capitalize()
+
+
+if __name__ == "__main__":
+    player_1 = Player(name="Javid")
+    print(Player.points())
+    player_2 = Player(name="Javid")
+    print(Player.points())
