@@ -50,7 +50,4 @@ class Player:
 
 
 if __name__ == "__main__":
-    player_1 = Player(name="Javid")
-    print(Player.points())
-    player_2 = Player(name="Javid")
-    print(Player.points())
+    print("Module contains functions related to player for hangman.")

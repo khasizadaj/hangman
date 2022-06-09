@@ -57,6 +57,8 @@ class Game:
         return player.point >= self.winning_point
 
     def move_to_next_player(self) -> int:
+        """Function updates `curr_player_id` and returns it."""
+
         if self.number_of_players == 1:
             return self.curr_player_id
 
@@ -70,11 +72,14 @@ class Game:
         """
         Sets the continuation state to be False, i.e. ends the game.
         """
+
         self._is_continuing = False
         return self._is_continuing
 
     @property
     def is_continuing(self):
+        """Function return boolean value that represents if game still continues."""
+
         return self._is_continuing
 
     def single_player_mode(self, player: Player, words: Words) -> None:
@@ -99,6 +104,7 @@ class Game:
                 player.add_point()
             else:
                 print("\nGetting leaderboard ...")
+
             time.sleep(3)
             clear_console()
 
@@ -159,7 +165,6 @@ class Game:
             clear_console()
 
             self.move_to_next_player()
-
             self.print_leaderboard(Player.points())
 
         self.print_leaderboard(Player.points())
@@ -169,7 +174,8 @@ class Game:
     def print_leaderboard(self, points) -> None:
         """Prints the leaderboard in a preety format."""
 
-        # TODO leaderboard should be aware of the players in the game and print accordingly (winning point)
+        # TODO leaderboard should be aware of the players in the game and
+        # print accordingly (winning point)
         print("LEADERBOARD")
         print("============================\n")
         print(get_pretty_leaderboard(points))

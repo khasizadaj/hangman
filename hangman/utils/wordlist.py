@@ -1,3 +1,6 @@
+"""Module contains class&functions related to providing words for the game."""
+
+
 ALL_WORDS = {
     "easy": [
         {"word": "hmm", "hint": "indicating thinking or pondering"},
@@ -44,68 +47,13 @@ ALL_WORDS = {
             "hint": "one that wins first place or first prize in a competition.",
         },
         {"word": "suspicious", "hint": "doubtful"},
-        {"word": "category", "hint": "a specifically defined division in a system of classification; a class."},
+        {
+            "word": "category",
+            "hint": "a specifically defined division in a system of classification; a class.",
+        },
     ],
 }
-# ALL_WORDS = {
-#     "easy": [
-#         "and",
-#         "get",
-#         "tan",
-#         "arm",
-#         "art",
-#         "ask",
-#         "act",
-#         "add",
-#         "tea",
-#         "ago",
-#         "fun",
-#         "run",
-#         "area",
-#         "army",
-#         "aunt",
-#         "away",
-#         "about",
-#         "above",
-#         "actor",
-#         "after",
-#         "again",
-#         "agree",
-#         "alone",
-#         "along",
-#         "angry",
-#         "apple",
-#         "phone",
-#         "water",
-#     ],
-#     "medium": [
-#         "python",
-#         "across",
-#         "active",
-#         "afraid",
-#         "amount",
-#         "answer",
-#         "always",
-#         "appear",
-#         "around",
-#         "arrive",
-#         "attack",
-#         "autumn",
-#         "ability",
-#         "absence",
-#         "academy",
-#         "account",
-#         "accused",
-#         "achieve",
-#         "acquire",
-#         "address",
-#         "advance",
-#         "adverse",
-#         "advised",
-#         "adviser",
-#     ],
-#     "hard": ["marvellous", "extraordinary", "tremendous", "suspicious"],
-# }
+
 
 DIFFICULTIES = {
     0: "all",
@@ -116,6 +64,8 @@ DIFFICULTIES = {
 
 
 def get_wordlist(difficulty_level: str = "all"):
+    """Function returns list of words with the given difficulty level."""
+
     if difficulty_level == "all":
         return get_all_words()
 
@@ -123,6 +73,8 @@ def get_wordlist(difficulty_level: str = "all"):
 
 
 def get_all_words():
+    """Function returns all words in the game in a list."""
+
     all_words = []
     for words in ALL_WORDS.values():
         all_words.extend(words)

@@ -166,7 +166,8 @@ class Word:
             return False, hints_count
 
         print(
-            f'\nAaaand "{guessed_letter}" is last letter. Wow, congrats, ingenious! You found the word, it was "{self.plain}".\n'
+            f'\nAaaand "{guessed_letter}" is last letter.'
+            + f'Wow, congrats, ingenious! You found the word, it was "{self.plain}".\n'
         )
         return True, hints_count
 
@@ -305,7 +306,8 @@ def get_custom_word() -> Word:
     Function gets custom word provided by the user.
     """
     custom_word_input = getpass(
-        "Choose your friend and ask him/her to type custom word (typed letters will be not shown, but registered): "
+        "Choose your friend and ask him/her to type custom word"
+        + "(typed letters will be not shown, but registered): "
     )
 
     word_is_fine = False

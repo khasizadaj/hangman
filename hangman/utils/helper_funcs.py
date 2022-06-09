@@ -10,6 +10,8 @@ from utils.wordlist import DIFFICULTIES
 
 
 def clear_console() -> None:
+    """Function clears console and works for all main operating systems."""
+
     # for windows
     if name == "nt":
         _ = system("cls")
@@ -26,6 +28,7 @@ def get_emotion(status: Optional[bool] = None) -> str:
     Args:
         status: boolean value indicating correctness of guessed letter
     """
+
     if status is None:
         return "Status is required."
 
@@ -63,6 +66,7 @@ def add_linebreak(quantity: int = 1) -> None:
     Args:
         quantity: quantity of line breaks required
     """
+
     if quantity == 1:
         print("")
         return None
@@ -109,6 +113,11 @@ def get_player_names(count: int) -> Tuple[str]:
 
 
 def get_difficulty_level() -> str:
+    """
+    Function propmpts user for difficulty id/number for words and returns
+    difficulty level that corresponds to it.
+    """
+
     print(
         "\n"
         + "0. All"
@@ -125,11 +134,17 @@ def get_difficulty_level() -> str:
 
 
 def get_difficulty_value(difficulty_id: int):
+    """
+    Returns string value that corresponds to `difficulty_id` that is provided
+    by player.
+    """
+
     return DIFFICULTIES.get(difficulty_id, None)
 
 
 def get_winning_point() -> int:
     """Return value that is provided by the user for winning point."""
+
     message = "\n Type winning point here: "
     while True:
         winning_point = input(message)
@@ -153,10 +168,10 @@ def get_guidelines(version: str = "short"):
         return ""
 
     path_to = f".\\guidelines\\{version}.txt"
+    # TODO add encoding for the file opening
     with open(path_to) as guide:
         return guide.read()
 
 
 if __name__ == "__main__":
     print("Module contains general helper functions for hangman.")
-    print(get_winning_point())
