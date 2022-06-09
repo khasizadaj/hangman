@@ -16,3 +16,26 @@
 - collecting names of player(s)
 - providing new word for opponent
 - player can challenge another player
+
+## version 0.3
+
+- Player class added to have clear game state management
+- added functionality to choose a difficulty level for words
+
+## version 0.4
+
+- Game class added to have all game logic in one place
+
+## version 0.5
+
+- guidelines added for the game
+
+## version 1.0
+
+- Word and Words class added to simplify codebase
+- wordlist updated and all words have hints
+- Hint functionality added for words
+- different points for normal words (1) and custom words (2 pts)
+- codebase refactored
+- ask how many rounds players want to play (i.e. winning point)
+- prompt for providing hint when 2 chances are left

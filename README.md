@@ -2,9 +2,11 @@
 
 ## introduction
 
-**TBA** info about hangman
+TODO info about hangman
 
 ## rules
+
+TODO rules for the game
 
 ## features
 
@@ -20,6 +22,11 @@
   - collecting names of player(s)
   - leaderboard
   - challenging the opponent by providing custom word
+- providing words with different difficulty levels
+- different points for normal words (1) and custom words (2 pts)
+- chance to get 3 hints during one game
+- ask how many rounds players want to play
+- prompt for providing hint when 2 chances are left
 
 <hr>
 
@@ -27,11 +34,7 @@
 
 > maybe in the next versions :)
 
-- [ ] word difficulty option (easy, medium, hard)
-- [ ] ask how many rounds players want to play
-- [ ] provide hints after 3 consecutive mistakes
-- [ ] guidelines would be good to have
-- [ ] clear screen after each turn (if possible)
+- [ ] add detailed guideline (long version)
 
 ## no way features
 
