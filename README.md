@@ -28,15 +28,10 @@ It can be played alone in single player mode and with your friends in multiplaye
   - collecting names of player(s)
   - leaderboard
   - challenging the opponent by providing custom word
-
-> **To be CLEANED LATER**
-
-- basic functionalities
-- automatic word (from list of words) provision for user to guess
-- informing user if he/she types previously typed letter
-- **collecting names** of players
-- game for **2 or many players**
-- **providing new word** for opponent (in the next round winner chooses the new word)
+- different points for normal words (1) and custom words (2 pts)
+- chance to get 3 hints during one game
+- ask how many rounds players want to play
+- prompt for providing hint when 2 chances are left
 
 <hr>
 
@@ -44,8 +39,8 @@ It can be played alone in single player mode and with your friends in multiplaye
 
 > maybe in the next versions :)
 
-- word difficulty option (easy, medium, hard)
-- not selecting previously provided words (yes, words are totally random now. Don't judge my laziness...)
+- [ ] not selecting previously provided words (yes, words are totally random now. Don't judge my laziness...)
+- [ ] add detailed guideline (long version)
 
 ## no way features
 
@@ -54,4 +49,3 @@ It can be played alone in single player mode and with your friends in multiplaye
 - drawing a hangman :)
 - colored messages
 - adding provided words to word list
-- hints
